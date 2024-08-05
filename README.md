@@ -20,8 +20,13 @@ It allowed time ranges applying to all blocked websites.
 6. Active `Pin to toolbar`
 7. Start configuring the website to block
 
-## Features to add
+## Features
 
+- [x] Add as many websites as possible
+- [x] Allow to remove a single entry
+- [x] Add as many time ranges as possible per website
+- [x] Enable autocomplete when typing website value
+- [x] Make the blocked page dynamic (background changes)
 - [ ] Export and import configuration from a CSV file
 - [ ] Export and import configuration from a JSON file
 - [ ] Improve popup UI
