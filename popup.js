@@ -1,17 +1,19 @@
 let blockedSites = [];
 
-// Load blocked sites when popup opens
 document.addEventListener('DOMContentLoaded', function () {
-  chrome.storage.sync.get(['blockedSites'], function (result) {
-    if (result.blockedSites) {
-      blockedSites = result.blockedSites;
+  chrome.runtime.sendMessage({ action: 'getSites' }, function (response) {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError);
+      return;
+    }
+    if (response && response.blockedSites) {
+      blockedSites = response.blockedSites;
       updateBlockedSitesList(blockedSites);
       updateAutocompleteList();
     }
   });
 });
 
-// Function to update the autocomplete list
 function updateAutocompleteList() {
   const sitesList = document.getElementById('sitesList');
   const uniqueSites = [...new Set(blockedSites.map((site) => site.site))];
@@ -24,7 +26,6 @@ function updateAutocompleteList() {
   });
 }
 
-// Add site button click handler
 document.getElementById('addSite').addEventListener('click', function () {
   let siteInput = document.getElementById('siteInput');
   let startTimeInput = document.getElementById('startTime');
@@ -62,7 +63,6 @@ document.getElementById('addSite').addEventListener('click', function () {
   }
 });
 
-// Update the list of blocked sites in the popup
 function updateBlockedSitesList(sites) {
   let list = document.getElementById('blockedSitesList');
   list.innerHTML = '';
@@ -75,9 +75,7 @@ function updateBlockedSitesList(sites) {
       chrome.runtime.sendMessage(
         {
           action: 'removeSite',
-          site: siteObj.site,
-          startTime: siteObj.startTime,
-          endTime: siteObj.endTime,
+          id: siteObj.id,
         },
         function (response) {
           if (chrome.runtime.lastError) {
