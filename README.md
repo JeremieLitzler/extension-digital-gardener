@@ -1,16 +1,16 @@
 # A very simple but flexible block-site extension for Chrome
 
-**The extension is still in beta mode as long as the v1 isn't released.**
+**🚨🚨🚨 The extension is still in beta mode as long as the v1 isn't released. 🚨🚨🚨**
 
 ## Why this extension
 
-I used to pay for BlockSite extension, but somehow, I was not really using it.
+I used to pay for [BlockSite extension](https://blocksite.co/), but somehow, I was not really using it.
 
 It works great but I couldn't setup time range when I wanted some websites to be disabled.
 
 It allowed time ranges applying to all blocked websites.
 
-## How to use Website Blocker
+## How to use Website Blocker ⁉️
 
 1. Download the source code and unzip it in your preferred location.
 2. Browse to [chrome://extensions/](chrome://extensions/).
@@ -20,7 +20,7 @@ It allowed time ranges applying to all blocked websites.
 6. Active `Pin to toolbar`
 7. Start configuring the website to block
 
-## Features
+## Features ✅
 
 - [x] Add as many websites as possible
 - [x] Allow to remove a single entry
@@ -37,7 +37,7 @@ It allowed time ranges applying to all blocked websites.
 - [ ] Export and import configuration from Google Drive
 - [ ] Convert to TypeScript
 
-## Troubleshooting
+## Troubleshooting 🐞
 
 If your blocked websites aren't blocked, try the following:
 
@@ -45,7 +45,7 @@ If your blocked websites aren't blocked, try the following:
 2. Reinstall the extension
 3. Finally, submit a bug and as many details as possible to reproduce the issue.
 
-## Supporting this project
+## Supporting this project 🙋
 
 You can submit pull request for bugs at anytime. For new feature, please describe why you need it.
 
