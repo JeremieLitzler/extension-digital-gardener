@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Site Blocker and Content Replacer",
+  "version": "1.0",
+  "description": "Blocks specified websites and replaces content on allowed pages",
+  "permissions": ["storage", "declarativeNetRequest"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html", "blocked.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' https://*.picsum.photos;"
+  }
+}

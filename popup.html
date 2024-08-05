@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Website Blocker</title>
+    <style>
+      body {
+        width: 300px;
+        padding: 10px;
+      }
+      input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Website Blocker</h2>
+    <input
+      type="text"
+      id="siteInput"
+      placeholder="Enter website to block (e.g., example.com)"
+    />
+    <button id="addSite">Add Site</button>
+    <h3>Blocked Sites:</h3>
+    <ul id="blockedSitesList"></ul>
+    <script src="popup.js"></script>
+  </body>
+</html>

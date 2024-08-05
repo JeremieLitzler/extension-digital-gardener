@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site Blocked</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 1s ease-in-out;
+      }
+      .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 80%;
+      }
+      h1 {
+        color: #e74c3c;
+        margin-bottom: 1rem;
+      }
+      p {
+        color: #34495e;
+        line-height: 1.6;
+      }
+      .block-icon {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .image-credit {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        font-size: 0.8rem;
+      }
+      .image-credit a {
+        color: white;
+        text-decoration: none;
+      }
+      .image-credit a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="block-icon">🚫</div>
+      <h1>Access Blocked</h1>
+      <p>This website has been blocked by the Website Blocker extension.</p>
+      <p>
+        If you believe this is a mistake or want to unblock this site, please
+        adjust your settings in the extension popup.
+      </p>
+    </div>
+    <div class="image-credit">
+      Photo provided by
+      <a href="https://picsum.photos" target="_blank">Lorem Picsum</a>
+    </div>
+    <script src="blocked.js"></script>
+  </body>
+</html>
