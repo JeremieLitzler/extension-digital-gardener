@@ -27,6 +27,7 @@ It allowed time ranges applying to all blocked websites.
 - [x] Add as many time ranges as possible per website
 - [x] Enable autocomplete when typing website value
 - [x] Make the blocked page dynamic (background changes)
+- [ ] Enable edition of an entry
 - [ ] Add tests
 - [ ] Export and import configuration from a CSV file
 - [ ] Export and import configuration from a JSON file
