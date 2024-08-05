@@ -1,80 +1,87 @@
-// Initialize rules
+let blockedSites = [];
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.get(['blockedSites'], function (result) {
     if (result.blockedSites) {
-      updateBlockRules(result.blockedSites);
+      blockedSites = result.blockedSites;
     }
   });
 });
 
-// Function to update blocking rules
-function updateBlockRules(blockedSites) {
-  let rules = blockedSites.flatMap((site, index) => [
-    {
-      id: index * 3 + 1,
-      priority: 1,
-      action: {
-        type: 'redirect',
-        redirect: { extensionPath: '/blocked.html' },
-      },
-      condition: {
-        urlFilter: `||${site}^`,
-        resourceTypes: ['main_frame'],
-      },
-    },
-    {
-      id: index * 3 + 2,
-      priority: 1,
-      action: {
-        type: 'redirect',
-        redirect: { extensionPath: '/blocked.html' },
-      },
-      condition: {
-        urlFilter: `*://*.${site}/*`,
-        resourceTypes: ['main_frame'],
-      },
-    },
-    {
-      id: index * 3 + 3,
-      priority: 1,
-      action: {
-        type: 'redirect',
-        redirect: { extensionPath: '/blocked.html' },
-      },
-      condition: {
-        urlFilter: `*://${site}/*`,
-        resourceTypes: ['main_frame'],
-      },
-    },
-  ]);
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  const currentTime = new Date();
+  const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
 
-  chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: rules.map((rule) => rule.id),
-    addRules: rules,
+  const matchingSites = blockedSites.filter((site) =>
+    details.url.includes(site.site)
+  );
+  const shouldBlock = matchingSites.some((site) => {
+    const startMinutes = timeToMinutes(site.startTime);
+    const endMinutes = timeToMinutes(site.endTime);
+    return isTimeInRange(currentMinutes, startMinutes, endMinutes);
   });
+
+  if (shouldBlock) {
+    chrome.tabs.update(details.tabId, {
+      url: chrome.runtime.getURL('blocked.html'),
+    });
+  }
+});
+
+function timeToMinutes(time) {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
 }
 
-// Listen for messages from popup
+function isTimeInRange(current, start, end) {
+  if (start <= end) {
+    return current >= start && current < end;
+  } else {
+    return current >= start || current < end;
+  }
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('Message received in background:', request);
   if (request.action === 'addSite') {
-    chrome.storage.sync.get(['blockedSites'], function (result) {
-      let blockedSites = result.blockedSites || [];
-      blockedSites.push(request.site);
-      chrome.storage.sync.set({ blockedSites: blockedSites }, function () {
-        updateBlockRules(blockedSites);
-        sendResponse({ blockedSites: blockedSites });
-      });
+    blockedSites.push({
+      site: request.site,
+      startTime: request.startTime,
+      endTime: request.endTime,
     });
-    return true;
+    chrome.storage.sync.set({ blockedSites: blockedSites }, function () {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        sendResponse({ error: chrome.runtime.lastError });
+      } else {
+        sendResponse({ blockedSites: blockedSites });
+      }
+    });
+    return true; // Indicates that the response is sent asynchronously
   } else if (request.action === 'removeSite') {
-    chrome.storage.sync.get(['blockedSites'], function (result) {
-      let blockedSites = result.blockedSites || [];
-      blockedSites = blockedSites.filter((site) => site !== request.site);
-      chrome.storage.sync.set({ blockedSites: blockedSites }, function () {
-        updateBlockRules(blockedSites);
+    blockedSites = blockedSites.filter(
+      (siteObj) =>
+        !(
+          siteObj.site === request.site &&
+          siteObj.startTime === request.startTime &&
+          siteObj.endTime === request.endTime
+        )
+    );
+    chrome.storage.sync.set({ blockedSites: blockedSites }, function () {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        sendResponse({ error: chrome.runtime.lastError });
+      } else {
         sendResponse({ blockedSites: blockedSites });
-      });
+      }
     });
-    return true;
+    return true; // Indicates that the response is sent asynchronously
+  }
+});
+
+// Load blocked sites when the background script starts
+chrome.storage.sync.get(['blockedSites'], function (result) {
+  if (result.blockedSites) {
+    blockedSites = result.blockedSites;
   }
 });

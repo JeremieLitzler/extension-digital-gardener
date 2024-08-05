@@ -6,6 +6,7 @@
       body {
         width: 300px;
         padding: 10px;
+        font-family: Arial, sans-serif;
       }
       input {
         width: 100%;
@@ -16,7 +17,20 @@
         padding: 0;
       }
       li {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+      }
+      .time-inputs {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+      }
+      .time-inputs input {
+        width: 45%;
+      }
+      button {
+        margin-top: 5px;
       }
     </style>
   </head>
@@ -27,6 +41,10 @@
       id="siteInput"
       placeholder="Enter website to block (e.g., example.com)"
     />
+    <div class="time-inputs">
+      <input type="time" id="startTime" value="00:00" />
+      <input type="time" id="endTime" value="23:59" />
+    </div>
     <button id="addSite">Add Site</button>
     <h3>Blocked Sites:</h3>
     <ul id="blockedSitesList"></ul>
