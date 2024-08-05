@@ -27,6 +27,7 @@ It allowed time ranges applying to all blocked websites.
 - [x] Add as many time ranges as possible per website
 - [x] Enable autocomplete when typing website value
 - [x] Make the blocked page dynamic (background changes)
+- [ ] Add tests
 - [ ] Export and import configuration from a CSV file
 - [ ] Export and import configuration from a JSON file
 - [ ] Improve popup UI
@@ -34,6 +35,7 @@ It allowed time ranges applying to all blocked websites.
 - [ ] Add a Pomodoro timer to the extension
 - [ ] Allow blocked websites during pomodoro short breaks
 - [ ] Export and import configuration from Google Drive
+- [ ] Convert to TypeScript
 
 ## Troubleshooting
 
