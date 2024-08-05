@@ -65,6 +65,34 @@ async function removeBlockedSite(id) {
   });
 }
 
+async function updateBlockedSite(id, startTime, endTime) {
+  const db = await getDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['blockedSites'], 'readwrite');
+    const objectStore = transaction.objectStore('blockedSites');
+    const getRequest = objectStore.get(id);
+
+    getRequest.onsuccess = function (event) {
+      const data = event.target.result;
+      data.startTime = startTime;
+      data.endTime = endTime;
+      const updateRequest = objectStore.put(data);
+
+      updateRequest.onsuccess = function () {
+        resolve();
+      };
+
+      updateRequest.onerror = function (event) {
+        reject('Error updating site: ' + event.target.error);
+      };
+    };
+
+    getRequest.onerror = function (event) {
+      reject('Error getting site for update: ' + event.target.error);
+    };
+  });
+}
+
 async function getAllBlockedSites() {
   const db = await getDB();
   return new Promise((resolve, reject) => {
@@ -83,6 +111,13 @@ async function getAllBlockedSites() {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'isDbReady') {
+    getDB()
+      .then(() => sendResponse({ dbReady: true }))
+      .catch(() => sendResponse({ dbReady: false }));
+    return true;
+  }
+
   if (request.action === 'addSite') {
     addBlockedSite(request.site, request.startTime, request.endTime)
       .then(() => getAllBlockedSites())
@@ -91,6 +126,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   } else if (request.action === 'removeSite') {
     removeBlockedSite(request.id)
+      .then(() => getAllBlockedSites())
+      .then((sites) => sendResponse({ blockedSites: sites }))
+      .catch((error) => sendResponse({ error: error.toString() }));
+    return true;
+  } else if (request.action === 'updateSite') {
+    updateBlockedSite(request.id, request.startTime, request.endTime)
       .then(() => getAllBlockedSites())
       .then((sites) => sendResponse({ blockedSites: sites }))
       .catch((error) => sendResponse({ error: error.toString() }));
@@ -133,8 +174,8 @@ function timeToMinutes(time) {
 
 function isTimeInRange(current, start, end) {
   if (start <= end) {
-    return current >= start && current <= end;
+    return current >= start && current < end;
   } else {
-    return current >= start || current <= end;
+    return current >= start || current < end;
   }
 }

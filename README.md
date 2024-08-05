@@ -22,12 +22,24 @@ It allowed time ranges applying to all blocked websites.
 
 ## Features ✅
 
+A blocking entry is defined with:
+
+- a URL chunk (ex: "youtube" or even "youtube.com")
+- a start time (hour:minute)
+- an end time (hour:minute)
+
+You can have several entries with the same URL chunk but different time ranges.
+
+You can :
+
 - [x] Add as many websites as possible
 - [x] Allow to remove a single entry
 - [x] Add as many time ranges as possible per website
-- [x] Enable autocomplete when typing website value
-- [x] Make the blocked page dynamic (background changes)
-- [ ] Enable edition of an entry
+- [x] Block any website browsed to in the current hour and minute falls between any of the entries
+- [x] Use the autocomplete when typing url chunck value
+- [x] See the blocked page with a random background changes pulled [from Lorem Picsum](https://picsum.photos/).
+- [x] Store entries in indexedDb
+- [x] Edit each entry's start and end time
 - [ ] Add tests
 - [ ] Export and import configuration from a CSV file
 - [ ] Export and import configuration from a JSON file

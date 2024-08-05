@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Website Blocker",
-  "version": "0.0.0.27",
+  "version": "0.0.0.40",
   "description": "Blocks specified websites during set times",
   "permissions": ["storage", "tabs", "webNavigation"],
   "host_permissions": ["<all_urls>"],
@@ -23,7 +23,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html", "blocked.js"],
+      "resources": ["blocked.html", "blocked.js", "manage.html", "manage.js"],
       "matches": ["<all_urls>"]
     }
   ],
