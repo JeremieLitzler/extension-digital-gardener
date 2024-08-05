@@ -22,13 +22,13 @@ It allowed time ranges applying to all blocked websites.
 
 ## Features to add
 
-- [] Export and import configuration from a CSV file
-- [] Export and import configuration from a JSON file
-- [] Improve popup UI
-- [] Warn user about overlapping time ranges for same website
-- [] Add a Pomodoro timer to the extension
-- [] Allow blocked websites during pomodoro short breaks
-- [] Export and import configuration from Google Drive
+- [ ] Export and import configuration from a CSV file
+- [ ] Export and import configuration from a JSON file
+- [ ] Improve popup UI
+- [ ] Warn user about overlapping time ranges for same website
+- [ ] Add a Pomodoro timer to the extension
+- [ ] Allow blocked websites during pomodoro short breaks
+- [ ] Export and import configuration from Google Drive
 
 ## Troubleshooting
 
