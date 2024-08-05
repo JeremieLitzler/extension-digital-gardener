@@ -1,11 +1,28 @@
+let blockedSites = [];
+
 // Load blocked sites when popup opens
 document.addEventListener('DOMContentLoaded', function () {
   chrome.storage.sync.get(['blockedSites'], function (result) {
     if (result.blockedSites) {
-      updateBlockedSitesList(result.blockedSites);
+      blockedSites = result.blockedSites;
+      updateBlockedSitesList(blockedSites);
+      updateAutocompleteList();
     }
   });
 });
+
+// Function to update the autocomplete list
+function updateAutocompleteList() {
+  const sitesList = document.getElementById('sitesList');
+  const uniqueSites = [...new Set(blockedSites.map((site) => site.site))];
+
+  sitesList.innerHTML = '';
+  uniqueSites.forEach((site) => {
+    const option = document.createElement('option');
+    option.value = site;
+    sitesList.appendChild(option);
+  });
+}
 
 // Add site button click handler
 document.getElementById('addSite').addEventListener('click', function () {
@@ -31,10 +48,12 @@ document.getElementById('addSite').addEventListener('click', function () {
           return;
         }
         if (response && response.blockedSites) {
+          blockedSites = response.blockedSites;
           siteInput.value = '';
           startTimeInput.value = '00:00';
           endTimeInput.value = '23:59';
-          updateBlockedSitesList(response.blockedSites);
+          updateBlockedSitesList(blockedSites);
+          updateAutocompleteList();
         } else {
           console.error('Invalid response from background script');
         }
@@ -66,7 +85,9 @@ function updateBlockedSitesList(sites) {
             return;
           }
           if (response && response.blockedSites) {
-            updateBlockedSitesList(response.blockedSites);
+            blockedSites = response.blockedSites;
+            updateBlockedSitesList(blockedSites);
+            updateAutocompleteList();
           } else {
             console.error('Invalid response from background script');
           }
