@@ -14,4 +14,27 @@ function setRandomBackground() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', setRandomBackground);
+function displayBlockedUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const blockedUrl = urlParams.get('source');
+  const blockedUrlElement = document.getElementById('blockedUrl');
+  console.log('blockedUrl > ', blockedUrl);
+  if (blockedUrl) {
+    blockedUrlElement.textContent = blockedUrl;
+  } else {
+    blockedUrlElement.textContent = 'Unknown';
+  }
+}
+
+function setupSettingsButton() {
+  const settingsButton = document.getElementById('settingsButton');
+  settingsButton.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'openSettings' });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setRandomBackground();
+  displayBlockedUrl();
+  setupSettingsButton();
+});

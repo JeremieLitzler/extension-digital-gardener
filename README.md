@@ -40,6 +40,7 @@ You can :
 - [x] See the blocked page with a random background changes pulled [from Lorem Picsum](https://picsum.photos/).
 - [x] Store entries in indexedDb
 - [x] Edit each entry's start and end time
+- [x] Add the blocked website URL and a button to open the settings.
 - [ ] Add tests
 - [ ] Export and import configuration from a CSV file
 - [ ] Export and import configuration from a JSON file

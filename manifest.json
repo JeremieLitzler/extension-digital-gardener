@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Website Blocker",
-  "version": "0.0.0.44",
+  "version": "0.0.0.47",
   "description": "Blocks specified websites during set times",
   "permissions": ["storage", "tabs", "webNavigation"],
   "host_permissions": ["<all_urls>"],
@@ -23,10 +23,16 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html", "blocked.js", "manage.html", "manage.js"],
+      "resources": [
+        "blocked.html",
+        "blocked.js",
+        "settings.html",
+        "settings.js"
+      ],
       "matches": ["<all_urls>"]
     }
   ],
+  "options_page": "settings.html",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' https://picsum.photos https://*.picsum.photos;"
   }

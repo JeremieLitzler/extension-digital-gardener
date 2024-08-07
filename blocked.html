@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Site Blocked</title>
+    <title>Access Blocked</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -50,6 +50,16 @@
           transform: scale(1);
         }
       }
+      #blockedUrl {
+        font-weight: bold;
+        word-break: break-all;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
       .image-credit {
         position: fixed;
         bottom: 10px;
@@ -72,10 +82,12 @@
       <div class="block-icon">🚫</div>
       <h1>Access Blocked</h1>
       <p>This website has been blocked by the Website Blocker extension.</p>
+      <p>Blocked URL: <span id="blockedUrl"></span></p>
       <p>
         If you believe this is a mistake or want to unblock this site, please
         adjust your settings in the extension popup.
       </p>
+      <button id="settingsButton">Go to Settings</button>
     </div>
     <div class="image-credit">
       Photo provided by

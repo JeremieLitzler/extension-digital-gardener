@@ -128,6 +128,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 
+  if (request.action === 'openSettings') {
+    chrome.runtime.openOptionsPage();
+  }
+
   if (request.action === 'addSite') {
     addBlockedSite(request.site, request.startTime, request.endTime)
       .then(() => getAllBlockedSites())
