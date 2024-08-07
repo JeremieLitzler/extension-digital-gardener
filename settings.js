@@ -180,3 +180,113 @@ function updateBlockedSitesList(sites) {
     list.appendChild(li);
   });
 }
+
+document.getElementById('exportCSV').addEventListener('click', exportCSV);
+document.getElementById('exportJSON').addEventListener('click', exportJSON);
+document
+  .getElementById('importButton')
+  .addEventListener('click', () =>
+    document.getElementById('importFile').click()
+  );
+document
+  .getElementById('importFile')
+  .addEventListener('change', importConfiguration);
+
+function exportCSV() {
+  let csvContent = 'data:text/csv;charset=utf-8,';
+  csvContent += 'site,startTime,endTime\n';
+  blockedSites.forEach((site) => {
+    csvContent += `${site.site},${site.startTime},${site.endTime}\n`;
+  });
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', 'blocked_sites.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function exportJSON() {
+  const jsonContent = JSON.stringify(blockedSites, null, 2);
+  const blob = new Blob([jsonContent], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'blocked_sites.json');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function importConfiguration(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const content = e.target.result;
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    let importedSites;
+    if (fileExtension === 'csv') {
+      importedSites = parseCSV(content);
+    } else if (fileExtension === 'json') {
+      importedSites = JSON.parse(content);
+    } else {
+      alert('Unsupported file format');
+      return;
+    }
+
+    importSites(importedSites);
+  };
+  reader.readAsText(file);
+}
+
+function parseCSV(content) {
+  const lines = content.split('\n').filter((line) => line.trim() !== '');
+  const headers = lines[0].split(',');
+  return lines
+    .slice(1)
+    .map((line) => {
+      const values = line.split(',');
+      return {
+        site: values[0],
+        startTime: values[1],
+        endTime: values[2],
+      };
+    })
+    .filter((site) => site.site && site.startTime && site.endTime);
+}
+
+function importSites(sites) {
+  let importedCount = 0;
+  sites.forEach((site) => {
+    chrome.runtime.sendMessage(
+      {
+        action: 'addSite',
+        site: site.site,
+        startTime: site.startTime,
+        endTime: site.endTime,
+      },
+      function (response) {
+        if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
+          return;
+        }
+        if (response && response.blockedSites) {
+          importedCount++;
+          if (importedCount === sites.length) {
+            blockedSites = response.blockedSites;
+            updateBlockedSitesList(blockedSites);
+            updateAutocompleteList();
+            alert(`Successfully imported ${importedCount} sites`);
+          }
+        } else {
+          console.error('Invalid response from background script');
+        }
+      }
+    );
+  });
+}

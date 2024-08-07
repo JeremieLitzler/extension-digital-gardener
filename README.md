@@ -42,8 +42,8 @@ You can :
 - [x] Edit each entry's start and end time
 - [x] Add the blocked website URL and a button to open the settings.
 - [ ] Add tests
-- [ ] Export and import configuration from a CSV file
-- [ ] Export and import configuration from a JSON file
+- [x] Export and import configuration from a CSV file
+- [x] Export and import configuration from a JSON file
 - [ ] Improve popup UI
 - [ ] Warn user about overlapping time ranges for same website
 - [ ] Add a Pomodoro timer to the extension

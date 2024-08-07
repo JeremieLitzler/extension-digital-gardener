@@ -60,6 +60,27 @@
         </div>
       </div>
     </div>
+    <div class="fixed top-4 right-4 flex space-x-2">
+      <button
+        id="exportCSV"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+      >
+        Export CSV
+      </button>
+      <button
+        id="exportJSON"
+        class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+      >
+        Export JSON
+      </button>
+      <input type="file" id="importFile" accept=".csv,.json" class="hidden" />
+      <button
+        id="importButton"
+        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+      >
+        Import
+      </button>
+    </div>
     <script src="settings.js"></script>
   </body>
 </html>
