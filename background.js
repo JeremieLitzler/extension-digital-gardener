@@ -110,6 +110,16 @@ async function getAllBlockedSites() {
   });
 }
 
+function extractDomain(url) {
+  let domain;
+  try {
+    domain = new URL(url).hostname;
+  } catch (e) {
+    domain = url;
+  }
+  return domain.replace(/^www\./, '');
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'isDbReady') {
     getDB()
@@ -145,14 +155,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  // Only process main frame navigation
+  if (details.frameId !== 0) return;
+
   getAllBlockedSites().then((blockedSites) => {
     const currentTime = new Date();
     const currentMinutes =
       currentTime.getHours() * 60 + currentTime.getMinutes();
 
-    const matchingSites = blockedSites.filter((site) =>
-      details.url.includes(site.site)
-    );
+    const urlDomain = extractDomain(details.url);
+
+    const matchingSites = blockedSites.filter((site) => {
+      const blockedDomain = extractDomain(site.site);
+      return (
+        urlDomain === blockedDomain || urlDomain.endsWith(`.${blockedDomain}`)
+      );
+    });
     const shouldBlock = matchingSites.some((site) => {
       const startMinutes = timeToMinutes(site.startTime);
       const endMinutes = timeToMinutes(site.endTime);
@@ -161,7 +179,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 
     if (shouldBlock) {
       chrome.tabs.update(details.tabId, {
-        url: chrome.runtime.getURL('blocked.html'),
+        url: chrome.runtime.getURL(`blocked.html?source=${details.url}`),
       });
     }
   });
