@@ -41,19 +41,19 @@ You can :
 - [x] Store entries in indexedDb
 - [x] Edit each entry's start and end time
 - [x] Add the blocked website URL and a button to open the settings.
-- [ ] Add tests (#9)
+- [ ] Add tests (https://github.com/JeremieLitzler/website-blocker-extension/issues/9)
 - [x] Export and import configuration from a CSV file
 - [x] Export and import configuration from a JSON file
-- [x] Export and import configuration from Google Drive (#3)
+- [x] Export and import configuration from Google Drive (https://github.com/JeremieLitzler/website-blocker-extension/issues/3)
   - Note: while this work for me, I have yet to publish the OAuth application on Google. You can [ask me to add you a test user](https://iamjeremie.me/page/contact-me/?utm_source=GitHub&utm_medium=social), if you want to try in the meantime.
-- [ ] Display a random quote about staying focused, indistractable or working on one task at a time (#2)
-- [ ] Add form validation when typing the times (#5)
-- [ ] Improve popup UI of blocked page (#10)
-- [ ] Warn user about overlapping time ranges for same website (#4)
-- [ ] Add a Pomodoro timer to the extension (#6)
-- [ ] Allow blocked websites during pomodoro short breaks (#7)
-- [ ] Publish the OAuth application (#11)
-- [ ] Convert to TypeScript (#8)
+- [ ] Display a random quote about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/2)
+- [ ] Add form validation when typing the times (https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
+- [ ] Improve popup UI of blocked page (https://github.com/JeremieLitzler/website-blocker-extension/issues/10)
+- [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
+- [ ] Add a Pomodoro timer to the extension (https://github.com/JeremieLitzler/website-blocker-extension/issues/6)
+- [ ] Allow blocked websites during pomodoro short breaks (https://github.com/JeremieLitzler/website-blocker-extension/issues/7)
+- [ ] Publish the OAuth application (https://github.com/JeremieLitzler/website-blocker-extension/issues/11)
+- [ ] Convert to TypeScript (https://github.com/JeremieLitzler/website-blocker-extension/issues/8)
 
 ## Troubleshooting 🐞
 
