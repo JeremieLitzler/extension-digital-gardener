@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Website Blocker",
-  "version": "0.0.0.49",
+  "version": "0.0.0.50",
   "description": "Blocks specified websites during set times",
   "permissions": ["storage", "tabs", "webNavigation", "identity"],
   "host_permissions": ["<all_urls>"],
