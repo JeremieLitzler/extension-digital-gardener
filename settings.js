@@ -290,3 +290,44 @@ function importSites(sites) {
     );
   });
 }
+
+document
+  .getElementById('exportToDrive')
+  .addEventListener('click', exportToDrive);
+document
+  .getElementById('importFromDrive')
+  .addEventListener('click', importFromDrive);
+
+async function exportToDrive() {
+  try {
+    const token = await getAuthToken();
+    const content = JSON.stringify(blockedSites, null, 2);
+    const fileName = 'blocked_sites.json';
+    const fileDetails = await uploadToDrive(token, fileName, content);
+
+    const message = `File name: ${fileDetails.name}<br><br>You can <a href="${fileDetails.webViewLink}" target="_blank">view it here</a>.`;
+
+    document.getElementById('driveModalMessage').innerHTML = message;
+    document.getElementById('driveModal').classList.remove('hidden');
+  } catch (error) {
+    console.error('Error exporting to Drive:', error);
+    alert('Error exporting to Google Drive');
+  }
+}
+
+document.getElementById('closeModal').addEventListener('click', function () {
+  document.getElementById('driveModal').classList.add('hidden');
+});
+
+async function importFromDrive() {
+  try {
+    const token = await getAuthToken();
+    const content = await downloadFromDrive(token, 'blocked_sites.json');
+    const importedSites = JSON.parse(content);
+    await importSites(importedSites);
+    alert('Successfully imported from Google Drive');
+  } catch (error) {
+    console.error('Error importing from Drive:', error);
+    alert('Error importing from Google Drive');
+  }
+}

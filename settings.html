@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website Blocker Manager</title>
     <script src="tailwind.js"></script>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto p-4 md:p-8">
@@ -61,6 +62,7 @@
       </div>
     </div>
     <div class="fixed top-4 right-4 flex space-x-2">
+      <h3>Local files</h3>
       <button
         id="exportCSV"
         class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
@@ -69,7 +71,7 @@
       </button>
       <button
         id="exportJSON"
-        class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
       >
         Export JSON
       </button>
@@ -81,6 +83,37 @@
         Import
       </button>
     </div>
+    <div class="fixed top-12 right-4 flex space-x-2">
+      <h3>Cloud storage</h3>
+
+      <button
+        id="exportToDrive"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+      >
+        Export to Drive
+      </button>
+      <button
+        id="importFromDrive"
+        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+      >
+        Import from Drive
+      </button>
+    </div>
+
+    <div id="driveModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 class="text-2xl">Export Successful</h2>
+        <p class="pt-4" id="driveModalMessage"></p>
+        <button
+          class="mt-4 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          id="closeModal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
     <script src="settings.js"></script>
+    <script src="google-drive-api.js"></script>
   </body>
 </html>

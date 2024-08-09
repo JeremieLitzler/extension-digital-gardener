@@ -18,9 +18,12 @@ function displayBlockedUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   const blockedUrl = urlParams.get('source');
   const blockedUrlElement = document.getElementById('blockedUrl');
+  const anchor = document.createElement('a');
+  anchor.href = blockedUrl;
+  anchor.innerText = blockedUrl;
   console.log('blockedUrl > ', blockedUrl);
   if (blockedUrl) {
-    blockedUrlElement.textContent = blockedUrl;
+    blockedUrlElement.appendChild(anchor);
   } else {
     blockedUrlElement.textContent = 'Unknown';
   }

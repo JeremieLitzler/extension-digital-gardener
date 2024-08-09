@@ -3,8 +3,12 @@
   "name": "Website Blocker",
   "version": "0.0.0.49",
   "description": "Blocks specified websites during set times",
-  "permissions": ["storage", "tabs", "webNavigation"],
+  "permissions": ["storage", "tabs", "webNavigation", "identity"],
   "host_permissions": ["<all_urls>"],
+  "oauth2": {
+    "client_id": "1049896011510-3q8bge2sas82moo2cv653imigjp7vsju.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/drive.file"]
+  },
   "background": {
     "service_worker": "background.js"
   },
