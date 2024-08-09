@@ -46,14 +46,13 @@ You can :
 - [x] Export and import configuration from a JSON file
 - [x] Export and import configuration from Google Drive (#3)
   - Note: while this work for me, I have yet to publish the OAuth application on Google. You can [ask me to add you a test user](https://iamjeremie.me/page/contact-me/?utm_source=GitHub&utm_medium=social), if you want to try in the meantime.
-  - [ ] Build a simple website to present the chrome extension
-  - [ ] Make sure to write the privacy policy and terms of use
 - [ ] Display a random quote about staying focused, indistractable or working on one task at a time (#2)
 - [ ] Add form validation when typing the times (#5)
 - [ ] Improve popup UI of blocked page (#10)
 - [ ] Warn user about overlapping time ranges for same website (#4)
 - [ ] Add a Pomodoro timer to the extension (#6)
 - [ ] Allow blocked websites during pomodoro short breaks (#7)
+- [ ] Publish the OAuth application (#11)
 - [ ] Convert to TypeScript (#8)
 
 ## Troubleshooting 🐞
