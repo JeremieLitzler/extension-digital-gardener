@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Access Blocked</title>
+    <script src="tailwind.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -80,14 +81,18 @@
   <body>
     <div class="container">
       <div class="block-icon">🚫</div>
-      <h1>Access Blocked</h1>
+      <h1 class="text-3xl">Access Blocked</h1>
+      <div id="quoteContainer" class="mt-4 mb-8">
+        <p id="quoteText" class="text-2xl"></p>
+        <p id="quoteAuthor" class="text-xl"></p>
+      </div>
       <p>This website has been blocked by the Website Blocker extension.</p>
       <p>Blocked URL: <span id="blockedUrl"></span></p>
       <p>
         If you believe this is a mistake or want to unblock this site, please
         adjust your settings in the extension popup.
       </p>
-      <button id="settingsButton">Go to Settings</button>
+      <button id="settingsButton" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mt-8">Go to Settings</button>
     </div>
     <div class="image-credit">
       Photo provided by

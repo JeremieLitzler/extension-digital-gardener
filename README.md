@@ -30,6 +30,8 @@ A blocking entry is defined with:
 
 You can have several entries with the same URL chunk but different time ranges.
 
+You cannot disable the website blocker while keeping the extension because I feel that it will allow you to cheat.
+
 You can :
 
 - [x] Add as many websites as possible
@@ -41,7 +43,6 @@ You can :
 - [x] Store entries in indexedDb
 - [x] Edit each entry's start and end time
 - [x] Add the blocked website URL and a button to open the settings.
-- [ ] Add tests (https://github.com/JeremieLitzler/website-blocker-extension/issues/9)
 - [x] Export and import configuration from a CSV file
 - [x] Export and import configuration from a JSON file
 - [x] Export and import configuration from Google Drive (https://github.com/JeremieLitzler/website-blocker-extension/issues/3)
@@ -52,8 +53,12 @@ You can :
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
 - [ ] Add a Pomodoro timer to the extension (https://github.com/JeremieLitzler/website-blocker-extension/issues/6)
 - [ ] Allow blocked websites during pomodoro short breaks (https://github.com/JeremieLitzler/website-blocker-extension/issues/7)
+- [ ] Add a calendar view of the blocked sites (https://github.com/JeremieLitzler/website-blocker-extension/issues/14)
+- [ ] Add the ability to send desktop push notifications when a website becomes unblocked (https://github.com/JeremieLitzler/website-blocker-extension/issues/14)
+- [ ] Publish the extension to the Chrome Webstore (https://github.com/JeremieLitzler/website-blocker-extension/issues/12)
 - [ ] Publish the OAuth application (https://github.com/JeremieLitzler/website-blocker-extension/issues/11)
 - [ ] Convert to TypeScript (https://github.com/JeremieLitzler/website-blocker-extension/issues/8)
+- [ ] Add tests (https://github.com/JeremieLitzler/website-blocker-extension/issues/9)
 
 ## Troubleshooting 🐞
 

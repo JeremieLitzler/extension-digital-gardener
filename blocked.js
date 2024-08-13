@@ -36,8 +36,28 @@ function setupSettingsButton() {
   });
 }
 
+function loadRandomQuote() {
+  fetch('quotes.json')
+    .then((response) => response.json())
+    .then((data) => {
+      const quotes = data.quotes;
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const randomQuote = quotes[randomIndex];
+
+      const quoteTextElement = document.getElementById('quoteText');
+      const quoteAuthorElement = document.getElementById('quoteAuthor');
+
+      quoteTextElement.textContent = `"${randomQuote.text}"`;
+      quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+    })
+    .catch((error) => {
+      console.error('Error loading quotes:', error);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setRandomBackground();
   displayBlockedUrl();
   setupSettingsButton();
+  loadRandomQuote();
 });
