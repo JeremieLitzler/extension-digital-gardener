@@ -69,8 +69,79 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeCalendarView() {
-  // This function will be implemented to set up the calendar view
-  console.log('Calendar view initialized');
+  const calendarView = document.getElementById('calendarView');
+  calendarView.innerHTML = `
+    <div class="mb-4">
+      <label for="urlSelect" class="block text-sm font-medium text-gray-700">Select URL:</label>
+      <select id="urlSelect" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+      </select>
+    </div>
+    <div id="calendar" class="grid grid-cols-8 gap-1">
+      <div class="font-bold">Time</div>
+      <div class="font-bold">Sun</div>
+      <div class="font-bold">Mon</div>
+      <div class="font-bold">Tue</div>
+      <div class="font-bold">Wed</div>
+      <div class="font-bold">Thu</div>
+      <div class="font-bold">Fri</div>
+      <div class="font-bold">Sat</div>
+    </div>
+  `;
+
+  createCalendarStructure();
+  updateUrlSelect();
+  updateCalendarView();
+}
+
+function createCalendarStructure() {
+  const calendar = document.getElementById('calendar');
+  for (let hour = 0; hour < 24; hour++) {
+    const timeCell = document.createElement('div');
+    timeCell.textContent = `${hour.toString().padStart(2, '0')}:00`;
+    calendar.appendChild(timeCell);
+
+    for (let day = 0; day < 7; day++) {
+      const cell = document.createElement('div');
+      cell.classList.add('border', 'border-gray-200', 'h-6');
+      cell.dataset.hour = hour;
+      cell.dataset.day = day;
+      calendar.appendChild(cell);
+    }
+  }
+}
+
+function updateUrlSelect() {
+  const urlSelect = document.getElementById('urlSelect');
+  const uniqueUrls = [...new Set(blockedSites.map(site => site.site))];
+  urlSelect.innerHTML = uniqueUrls.map(url => `<option value="${url}">${url}</option>`).join('');
+  urlSelect.addEventListener('change', updateCalendarView);
+}
+
+function updateCalendarView() {
+  const selectedUrl = document.getElementById('urlSelect').value;
+  const calendar = document.getElementById('calendar');
+  const cells = calendar.querySelectorAll('div[data-hour]');
+
+  cells.forEach(cell => cell.classList.remove('bg-red-500'));
+
+  const sitesForUrl = blockedSites.filter(site => site.site === selectedUrl);
+
+  sitesForUrl.forEach(site => {
+    const startHour = parseInt(site.startTime.split(':')[0]);
+    const endHour = parseInt(site.endTime.split(':')[0]);
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+    for (let hour = startHour; hour < endHour; hour++) {
+      daysOfWeek.forEach((day, index) => {
+        if (site.days[day]) {
+          const cell = calendar.querySelector(`div[data-hour="${hour}"][data-day="${index}"]`);
+          if (cell) {
+            cell.classList.add('bg-red-500');
+          }
+        }
+      });
+    }
+  });
 }
 
 function updateAutocompleteList() {
