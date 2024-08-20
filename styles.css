@@ -27,3 +27,19 @@
 .hidden {
   display: none;
 }
+
+.main {
+  margin-top: 10rem;
+}
+
+@media (min-width: 400px) {
+  .main {
+    margin-top: 6rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .main {
+    margin-top: initial;
+  }
+}

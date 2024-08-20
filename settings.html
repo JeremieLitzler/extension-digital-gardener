@@ -11,9 +11,15 @@
     <header
       class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-md z-10"
     >
-      <nav class="flex flex-col xl:flex-row items-center justify-between container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-4 xl:mb-0">Website Blocker Settings</h1>
-        <div class="flex flex-col xl:flex-row justify-end space-y-4 xl:space-y-0 xl:space-x-4">
+      <nav
+        class="flex flex-col xl:flex-row items-center justify-between container mx-auto p-4"
+      >
+        <h1 class="text-3xl font-bold mb-4 xl:mb-0">
+          Website Blocker Settings
+        </h1>
+        <div
+          class="flex flex-col xl:flex-row justify-end space-y-4 xl:space-y-0 xl:space-x-4"
+        >
           <div class="flex items-center space-x-2">
             <h3 class="text-sm font-semibold">Local files:</h3>
             <button
@@ -59,16 +65,10 @@
         </div>
       </nav>
     </header>
-    <main class="container mx-auto p-4 md:p-8">
+    <main class="main container mx-auto p-4 md:p-8">
       <div class="flex flex-col lg:flex-row lg:space-x-8">
-        <!-- Blocked Sites list section -->
-        <div class="w-full lg:w-2/3 order-1 lg:order-1">
-          <h2 class="text-2xl font-semibold mb-4">Blocked Sites</h2>
-          <ul id="blockedSitesList" class="space-y-4"></ul>
-        </div>
-
         <!-- Add New Site section -->
-        <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-2 lg:order-2">
+        <div class="w-full lg:w-1/3 mb-8 lg:mb-0 order-1 lg:order-2">
           <h2 class="text-2xl font-semibold mb-4">Add New Site</h2>
           <div class="bg-white rounded-xl shadow-md p-6">
             <div class="flex flex-col mb-4">
@@ -179,6 +179,11 @@
               Add Site
             </button>
           </div>
+        </div>
+        <!-- Blocked Sites list section -->
+        <div class="w-full lg:w-2/3 order-1 lg:order-2">
+          <h2 class="text-2xl font-semibold mb-4">Blocked Sites</h2>
+          <ul id="blockedSitesList" class="space-y-4"></ul>
         </div>
       </div>
     </main>

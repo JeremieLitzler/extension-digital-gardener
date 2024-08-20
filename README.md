@@ -49,6 +49,7 @@ You can :
   - Note: while this work for me, I have yet to publish the OAuth application on Google. You can [ask me to add you a test user](https://iamjeremie.me/page/contact-me/?utm_source=GitHub&utm_medium=social), if you want to try in the meantime.
 - [x] Display a random quote about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/2)
 - [x] Display a random call-to-action as the heading about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/15)
+- [x] Add the ability to select the day(s) of the week when the time range applies ()
 - [ ] Add form validation when typing the times (https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
 - [ ] Improve popup UI of blocked page (https://github.com/JeremieLitzler/website-blocker-extension/issues/10)
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
