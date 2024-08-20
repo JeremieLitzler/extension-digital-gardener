@@ -165,8 +165,9 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 
   getAllBlockedSites().then((blockedSites) => {
     const currentTime = new Date();
-    const currentMinutes =
-      currentTime.getHours() * 60 + currentTime.getMinutes();
+    const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+    const currentDay = currentTime.getDay(); // 0 (Sunday) to 6 (Saturday)
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
     const urlDomain = extractDomain(details.url);
 
@@ -179,7 +180,8 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const shouldBlock = matchingSites.some((site) => {
       const startMinutes = timeToMinutes(site.startTime);
       const endMinutes = timeToMinutes(site.endTime);
-      return isTimeInRange(currentMinutes, startMinutes, endMinutes);
+      const isDayMatched = site.days && site.days[daysOfWeek[currentDay]];
+      return isDayMatched && isTimeInRange(currentMinutes, startMinutes, endMinutes);
     });
 
     if (shouldBlock) {
