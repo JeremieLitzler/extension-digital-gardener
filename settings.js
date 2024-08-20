@@ -78,7 +78,7 @@ function initializeCalendarView() {
       <select id="urlSelect" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
       </select>
     </div>
-    <div id="calendar" class="grid grid-cols-8 gap-1">
+    <div id="calendar" class="grid grid-cols-8 gap-0">
       <div class="font-bold">Time</div>
       <div class="font-bold">Sun</div>
       <div class="font-bold">Mon</div>
