@@ -57,15 +57,17 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // View switching
-  document.getElementById('listViewBtn').addEventListener('click', function() {
+  document.getElementById('listViewBtn').addEventListener('click', function () {
     document.getElementById('listView').classList.remove('hidden');
     document.getElementById('calendarView').classList.add('hidden');
   });
 
-  document.getElementById('calendarViewBtn').addEventListener('click', function() {
-    document.getElementById('listView').classList.add('hidden');
-    document.getElementById('calendarView').classList.remove('hidden');
-  });
+  document
+    .getElementById('calendarViewBtn')
+    .addEventListener('click', function () {
+      document.getElementById('listView').classList.add('hidden');
+      document.getElementById('calendarView').classList.remove('hidden');
+    });
 });
 
 function initializeCalendarView() {
@@ -99,7 +101,9 @@ function createCalendarStructure() {
     const hour = Math.floor(minutes / 60);
     const minute = minutes % 60;
     const timeCell = document.createElement('div');
-    timeCell.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    timeCell.textContent = `${hour.toString().padStart(2, '0')}:${minute
+      .toString()
+      .padStart(2, '0')}`;
     calendar.appendChild(timeCell);
 
     for (let day = 0; day < 7; day++) {
@@ -114,8 +118,10 @@ function createCalendarStructure() {
 
 function updateUrlSelect() {
   const urlSelect = document.getElementById('urlSelect');
-  const uniqueUrls = [...new Set(blockedSites.map(site => site.site))];
-  urlSelect.innerHTML = uniqueUrls.map(url => `<option value="${url}">${url}</option>`).join('');
+  const uniqueUrls = [...new Set(blockedSites.map((site) => site.site))];
+  urlSelect.innerHTML = uniqueUrls
+    .map((url) => `<option value="${url}">${url}</option>`)
+    .join('');
   urlSelect.addEventListener('change', updateCalendarView);
 }
 
@@ -124,19 +130,29 @@ function updateCalendarView() {
   const calendar = document.getElementById('calendar');
   const cells = calendar.querySelectorAll('div[data-minutes]');
 
-  cells.forEach(cell => cell.classList.remove('bg-red-500'));
+  cells.forEach((cell) => cell.classList.remove('bg-red-500'));
 
-  const sitesForUrl = blockedSites.filter(site => site.site === selectedUrl);
+  const sitesForUrl = blockedSites.filter((site) => site.site === selectedUrl);
 
-  sitesForUrl.forEach(site => {
+  sitesForUrl.forEach((site) => {
     const startMinutes = timeToMinutes(site.startTime);
     const endMinutes = timeToMinutes(site.endTime);
-    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const daysOfWeek = [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+    ];
 
     for (let minutes = startMinutes; minutes < endMinutes; minutes += 15) {
       daysOfWeek.forEach((day, index) => {
         if (site.days[day]) {
-          const cell = calendar.querySelector(`div[data-minutes="${minutes}"][data-day="${index}"]`);
+          const cell = calendar.querySelector(
+            `div[data-minutes="${minutes}"][data-day="${index}"]`
+          );
           if (cell) {
             cell.classList.add('bg-red-500');
           }
@@ -245,7 +261,7 @@ function updateBlockedSitesList(sites) {
             </div>
             <div class="mt-2">
                 <label class="block mb-2 font-semibold">Applicable on:</label>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-0">
                     <label class="flex items-center">
                         <input type="checkbox" name="day-${
                           siteObj.id
@@ -314,7 +330,9 @@ function updateBlockedSitesList(sites) {
     const startTimeInput = li.querySelector('.edit-start-time');
     const endTimeInput = li.querySelector('.edit-end-time');
     const saveButton = li.querySelector('.save-changes');
-    const dayCheckboxes = li.querySelectorAll(`input[name="day-${siteObj.id}"]`);
+    const dayCheckboxes = li.querySelectorAll(
+      `input[name="day-${siteObj.id}"]`
+    );
 
     function handleChange() {
       unsavedChanges[siteObj.id] = true;
@@ -323,7 +341,9 @@ function updateBlockedSitesList(sites) {
 
     startTimeInput.addEventListener('change', handleChange);
     endTimeInput.addEventListener('change', handleChange);
-    dayCheckboxes.forEach(checkbox => checkbox.addEventListener('change', handleChange));
+    dayCheckboxes.forEach((checkbox) =>
+      checkbox.addEventListener('change', handleChange)
+    );
 
     saveButton.addEventListener('click', function () {
       const newStartTime = startTimeInput.value;
