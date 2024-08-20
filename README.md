@@ -52,6 +52,7 @@ You can :
 - [x] Add the ability to select the day(s) of the week when the time range applies (https://github.com/JeremieLitzler/website-blocker-extension/issues/16)
 - [x] Show "Unsaved changes" message when editing (https://github.com/JeremieLitzler/website-blocker-extension/issues/17)
 - [ ] ~Add form validation when typing the times~ (see issue why I cancelled this > https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
+- [x] Implement the blocking feature to check the time and the day of week when blocking a URL (https://github.com/JeremieLitzler/website-blocker-extension/issues/18)
 - [ ] Improve popup UI of blocked page (https://github.com/JeremieLitzler/website-blocker-extension/issues/10)
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
 - [ ] Add a Pomodoro timer to the extension (https://github.com/JeremieLitzler/website-blocker-extension/issues/6)
