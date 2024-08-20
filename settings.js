@@ -51,6 +51,11 @@ function updateAutocompleteList() {
   });
 }
 
+document.getElementById('checkAll').addEventListener('change', function() {
+  const dayCheckboxes = document.querySelectorAll('input[name="day"]');
+  dayCheckboxes.forEach(checkbox => checkbox.checked = this.checked);
+});
+
 document.getElementById('addSite').addEventListener('click', function () {
   let siteInput = document.getElementById('siteInput');
   let startTimeInput = document.getElementById('startTime');
@@ -60,6 +65,21 @@ document.getElementById('addSite').addEventListener('click', function () {
   let startTime = startTimeInput.value;
   let endTime = endTimeInput.value;
 
+  const dayCheckboxes = document.querySelectorAll('input[name="day"]:checked');
+  const days = {
+    sunday: false,
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false
+  };
+
+  dayCheckboxes.forEach(checkbox => {
+    days[checkbox.value] = true;
+  });
+
   if (site && startTime && endTime) {
     chrome.runtime.sendMessage(
       {
@@ -67,6 +87,7 @@ document.getElementById('addSite').addEventListener('click', function () {
         site: site,
         startTime: startTime,
         endTime: endTime,
+        days: days
       },
       function (response) {
         if (chrome.runtime.lastError) {
@@ -78,6 +99,8 @@ document.getElementById('addSite').addEventListener('click', function () {
           siteInput.value = '';
           startTimeInput.value = '';
           endTimeInput.value = '';
+          document.querySelectorAll('input[name="day"]').forEach(checkbox => checkbox.checked = false);
+          document.getElementById('checkAll').checked = false;
           updateBlockedSitesList(blockedSites);
           updateAutocompleteList();
         } else {
@@ -103,57 +126,89 @@ function updateBlockedSitesList(sites) {
                     <input type="time" value="${siteObj.endTime}" class="edit-end-time px-2 py-1 border rounded">
                 </div>
             </div>
+            <div class="mt-2">
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="sunday" class="mr-2" ${siteObj.days && siteObj.days.sunday ? 'checked' : ''}>
+                        <span>Sunday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="monday" class="mr-2" ${siteObj.days && siteObj.days.monday ? 'checked' : ''}>
+                        <span>Monday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="tuesday" class="mr-2" ${siteObj.days && siteObj.days.tuesday ? 'checked' : ''}>
+                        <span>Tuesday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="wednesday" class="mr-2" ${siteObj.days && siteObj.days.wednesday ? 'checked' : ''}>
+                        <span>Wednesday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="thursday" class="mr-2" ${siteObj.days && siteObj.days.thursday ? 'checked' : ''}>
+                        <span>Thursday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="friday" class="mr-2" ${siteObj.days && siteObj.days.friday ? 'checked' : ''}>
+                        <span>Friday</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="day-${siteObj.id}" value="saturday" class="mr-2" ${siteObj.days && siteObj.days.saturday ? 'checked' : ''}>
+                        <span>Saturday</span>
+                    </label>
+                </div>
+            </div>
             <div class="mt-2 flex justify-between items-center">
-                <span class="text-sm text-green-500 save-feedback hidden">Saved!</span>
+                <button class="save-changes bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Save Changes</button>
                 <button class="remove-site bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Remove</button>
             </div>
         `;
 
-    const saveFeedback = li.querySelector('.save-feedback');
     const startTimeInput = li.querySelector('.edit-start-time');
     const endTimeInput = li.querySelector('.edit-end-time');
+    const saveButton = li.querySelector('.save-changes');
 
-    function saveChanges() {
+    saveButton.addEventListener('click', function() {
       const newStartTime = startTimeInput.value;
       const newEndTime = endTimeInput.value;
+      const dayCheckboxes = li.querySelectorAll(`input[name="day-${siteObj.id}"]:checked`);
+      const days = {
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false
+      };
 
-      if (
-        newStartTime !== siteObj.startTime ||
-        newEndTime !== siteObj.endTime
-      ) {
-        chrome.runtime.sendMessage(
-          {
-            action: 'updateSite',
-            id: siteObj.id,
-            startTime: newStartTime,
-            endTime: newEndTime,
-          },
-          function (response) {
-            if (chrome.runtime.lastError) {
-              console.error(chrome.runtime.lastError);
-              return;
-            }
-            if (response && response.blockedSites) {
-              blockedSites = response.blockedSites;
-              siteObj.startTime = newStartTime;
-              siteObj.endTime = newEndTime;
-              saveFeedback.classList.remove('hidden');
-              setTimeout(() => {
-                saveFeedback.classList.add('hidden');
-              }, 2000);
-              updateAutocompleteList();
-            } else {
-              console.error('Invalid response from background script');
-            }
+      dayCheckboxes.forEach(checkbox => {
+        days[checkbox.value] = true;
+      });
+
+      chrome.runtime.sendMessage(
+        {
+          action: 'updateSite',
+          id: siteObj.id,
+          startTime: newStartTime,
+          endTime: newEndTime,
+          days: days
+        },
+        function (response) {
+          if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+            return;
           }
-        );
-      }
-    }
-
-    startTimeInput.addEventListener('change', saveChanges);
-    endTimeInput.addEventListener('change', saveChanges);
-    startTimeInput.addEventListener('blur', saveChanges);
-    endTimeInput.addEventListener('blur', saveChanges);
+          if (response && response.blockedSites) {
+            blockedSites = response.blockedSites;
+            updateBlockedSitesList(blockedSites);
+            updateAutocompleteList();
+          } else {
+            console.error('Invalid response from background script');
+          }
+        }
+      );
+    });
 
     li.querySelector('.remove-site').onclick = function () {
       chrome.runtime.sendMessage(
