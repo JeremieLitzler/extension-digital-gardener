@@ -51,9 +51,9 @@ function updateAutocompleteList() {
   });
 }
 
-document.getElementById('checkAll').addEventListener('change', function() {
+document.getElementById('checkAll').addEventListener('change', function () {
   const dayCheckboxes = document.querySelectorAll('input[name="day"]');
-  dayCheckboxes.forEach(checkbox => checkbox.checked = this.checked);
+  dayCheckboxes.forEach((checkbox) => (checkbox.checked = this.checked));
 });
 
 document.getElementById('addSite').addEventListener('click', function () {
@@ -73,10 +73,10 @@ document.getElementById('addSite').addEventListener('click', function () {
     wednesday: false,
     thursday: false,
     friday: false,
-    saturday: false
+    saturday: false,
   };
 
-  dayCheckboxes.forEach(checkbox => {
+  dayCheckboxes.forEach((checkbox) => {
     days[checkbox.value] = true;
   });
 
@@ -87,7 +87,7 @@ document.getElementById('addSite').addEventListener('click', function () {
         site: site,
         startTime: startTime,
         endTime: endTime,
-        days: days
+        days: days,
       },
       function (response) {
         if (chrome.runtime.lastError) {
@@ -99,7 +99,9 @@ document.getElementById('addSite').addEventListener('click', function () {
           siteInput.value = '';
           startTimeInput.value = '';
           endTimeInput.value = '';
-          document.querySelectorAll('input[name="day"]').forEach(checkbox => checkbox.checked = false);
+          document
+            .querySelectorAll('input[name="day"]')
+            .forEach((checkbox) => (checkbox.checked = false));
           document.getElementById('checkAll').checked = false;
           updateBlockedSitesList(blockedSites);
           updateAutocompleteList();
@@ -119,42 +121,73 @@ function updateBlockedSitesList(sites) {
     let li = document.createElement('li');
     li.className = 'bg-white p-4 rounded-md shadow';
     li.innerHTML = `
-            <div class="flex items-center justify-between">
-                <span class="font-semibold">${siteObj.site}</span>
-                <div class="space-x-2">
-                    <input type="time" value="${siteObj.startTime}" class="edit-start-time px-2 py-1 border rounded">
-                    <input type="time" value="${siteObj.endTime}" class="edit-end-time px-2 py-1 border rounded">
-                </div>
+            <p><span class="font-semibold">URL:</span> ${siteObj.site}</p>
+            <div class="mt-2">
+              <p class="font-semibold">Time range:</p>
+              <input type="time" value="${
+                siteObj.startTime
+              }" class="edit-start-time px-2 py-1 border rounded">
+              <input type="time" value="${
+                siteObj.endTime
+              }" class="edit-end-time px-2 py-1 border rounded">
             </div>
             <div class="mt-2">
                 <label class="block mb-2 font-semibold">Applicable on:</label>
                 <div class="grid grid-cols-2 gap-2">
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="sunday" class="mr-2" ${siteObj.days && siteObj.days.sunday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="sunday" class="mr-2" ${
+      siteObj.days && siteObj.days.sunday ? 'checked' : ''
+    }>
                         <span>Sunday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="monday" class="mr-2" ${siteObj.days && siteObj.days.monday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="monday" class="mr-2" ${
+      siteObj.days && siteObj.days.monday ? 'checked' : ''
+    }>
                         <span>Monday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="tuesday" class="mr-2" ${siteObj.days && siteObj.days.tuesday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="tuesday" class="mr-2" ${
+      siteObj.days && siteObj.days.tuesday ? 'checked' : ''
+    }>
                         <span>Tuesday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="wednesday" class="mr-2" ${siteObj.days && siteObj.days.wednesday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="wednesday" class="mr-2" ${
+      siteObj.days && siteObj.days.wednesday ? 'checked' : ''
+    }>
                         <span>Wednesday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="thursday" class="mr-2" ${siteObj.days && siteObj.days.thursday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="thursday" class="mr-2" ${
+      siteObj.days && siteObj.days.thursday ? 'checked' : ''
+    }>
                         <span>Thursday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="friday" class="mr-2" ${siteObj.days && siteObj.days.friday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="friday" class="mr-2" ${
+      siteObj.days && siteObj.days.friday ? 'checked' : ''
+    }>
                         <span>Friday</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="checkbox" name="day-${siteObj.id}" value="saturday" class="mr-2" ${siteObj.days && siteObj.days.saturday ? 'checked' : ''}>
+                        <input type="checkbox" name="day-${
+                          siteObj.id
+                        }" value="saturday" class="mr-2" ${
+      siteObj.days && siteObj.days.saturday ? 'checked' : ''
+    }>
                         <span>Saturday</span>
                     </label>
                 </div>
@@ -169,10 +202,12 @@ function updateBlockedSitesList(sites) {
     const endTimeInput = li.querySelector('.edit-end-time');
     const saveButton = li.querySelector('.save-changes');
 
-    saveButton.addEventListener('click', function() {
+    saveButton.addEventListener('click', function () {
       const newStartTime = startTimeInput.value;
       const newEndTime = endTimeInput.value;
-      const dayCheckboxes = li.querySelectorAll(`input[name="day-${siteObj.id}"]:checked`);
+      const dayCheckboxes = li.querySelectorAll(
+        `input[name="day-${siteObj.id}"]:checked`
+      );
       const days = {
         sunday: false,
         monday: false,
@@ -180,10 +215,10 @@ function updateBlockedSitesList(sites) {
         wednesday: false,
         thursday: false,
         friday: false,
-        saturday: false
+        saturday: false,
       };
 
-      dayCheckboxes.forEach(checkbox => {
+      dayCheckboxes.forEach((checkbox) => {
         days[checkbox.value] = true;
       });
 
@@ -193,7 +228,7 @@ function updateBlockedSitesList(sites) {
           id: siteObj.id,
           startTime: newStartTime,
           endTime: newEndTime,
-          days: days
+          days: days,
         },
         function (response) {
           if (chrome.runtime.lastError) {
