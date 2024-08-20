@@ -30,7 +30,7 @@ A blocking entry is defined with:
 
 You can have several entries with the same URL chunk but different time ranges.
 
-You cannot disable the website blocker in the settings while keeping the extension enabled because I feel that it will allow you to cheat. You can still update the time range you're blocking the 
+You cannot disable the website blocker in the settings while keeping the extension enabled because I feel that it will allow you to cheat. You can still update the time range you're blocking the
 
 You can :
 
@@ -48,6 +48,7 @@ You can :
 - [x] Export and import configuration from Google Drive (https://github.com/JeremieLitzler/website-blocker-extension/issues/3)
   - Note: while this work for me, I have yet to publish the OAuth application on Google. You can [ask me to add you a test user](https://iamjeremie.me/page/contact-me/?utm_source=GitHub&utm_medium=social), if you want to try in the meantime.
 - [x] Display a random quote about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/2)
+- [x] Display a random call-to-action as the heading about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/15)
 - [ ] Add form validation when typing the times (https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
 - [ ] Improve popup UI of blocked page (https://github.com/JeremieLitzler/website-blocker-extension/issues/10)
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
