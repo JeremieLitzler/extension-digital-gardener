@@ -1,4 +1,21 @@
 let blockedSites = [];
+let unsavedChanges = {};
+
+function showUnsavedChangesWarning(siteId) {
+  const warningElement = document.querySelector(`#warning-${siteId}`);
+  if (warningElement) {
+    warningElement.textContent = 'Unsaved changes!';
+    warningElement.classList.remove('hidden');
+  }
+}
+
+function clearUnsavedChangesWarning(siteId) {
+  const warningElement = document.querySelector(`#warning-${siteId}`);
+  if (warningElement) {
+    warningElement.textContent = '';
+    warningElement.classList.add('hidden');
+  }
+}
 
 function checkDbAndLoadSites() {
   chrome.runtime.sendMessage({ action: 'isDbReady' }, function (response) {
@@ -196,18 +213,26 @@ function updateBlockedSitesList(sites) {
                 <button class="save-changes bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Save Changes</button>
                 <button class="remove-site bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Remove</button>
             </div>
+            <p id="warning-${siteObj.id}" class="text-red-500 mt-2 hidden"></p>
         `;
 
     const startTimeInput = li.querySelector('.edit-start-time');
     const endTimeInput = li.querySelector('.edit-end-time');
     const saveButton = li.querySelector('.save-changes');
+    const dayCheckboxes = li.querySelectorAll(`input[name="day-${siteObj.id}"]`);
+
+    function handleChange() {
+      unsavedChanges[siteObj.id] = true;
+      showUnsavedChangesWarning(siteObj.id);
+    }
+
+    startTimeInput.addEventListener('change', handleChange);
+    endTimeInput.addEventListener('change', handleChange);
+    dayCheckboxes.forEach(checkbox => checkbox.addEventListener('change', handleChange));
 
     saveButton.addEventListener('click', function () {
       const newStartTime = startTimeInput.value;
       const newEndTime = endTimeInput.value;
-      const dayCheckboxes = li.querySelectorAll(
-        `input[name="day-${siteObj.id}"]:checked`
-      );
       const days = {
         sunday: false,
         monday: false,
@@ -219,7 +244,7 @@ function updateBlockedSitesList(sites) {
       };
 
       dayCheckboxes.forEach((checkbox) => {
-        days[checkbox.value] = true;
+        days[checkbox.value] = checkbox.checked;
       });
 
       chrome.runtime.sendMessage(
@@ -239,6 +264,8 @@ function updateBlockedSitesList(sites) {
             blockedSites = response.blockedSites;
             updateBlockedSitesList(blockedSites);
             updateAutocompleteList();
+            delete unsavedChanges[siteObj.id];
+            clearUnsavedChangesWarning(siteObj.id);
           } else {
             console.error('Invalid response from background script');
           }
