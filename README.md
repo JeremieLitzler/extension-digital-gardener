@@ -51,7 +51,7 @@ You can :
 - [x] Display a random call-to-action as the heading about staying focused, indistractable or working on one task at a time (https://github.com/JeremieLitzler/website-blocker-extension/issues/15)
 - [x] Add the ability to select the day(s) of the week when the time range applies (https://github.com/JeremieLitzler/website-blocker-extension/issues/16)
 - [x] Show "Unsaved changes" message when editing (https://github.com/JeremieLitzler/website-blocker-extension/issues/17)
-- [ ] Add form validation when typing the times (https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
+- [ ] ~Add form validation when typing the times~ (see issue why I cancelled this > https://github.com/JeremieLitzler/website-blocker-extension/issues/5)
 - [ ] Improve popup UI of blocked page (https://github.com/JeremieLitzler/website-blocker-extension/issues/10)
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
 - [ ] Add a Pomodoro timer to the extension (https://github.com/JeremieLitzler/website-blocker-extension/issues/6)
