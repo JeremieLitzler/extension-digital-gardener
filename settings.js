@@ -127,6 +127,7 @@ function updateBlockedSitesList(sites) {
                 </div>
             </div>
             <div class="mt-2">
+                <label class="block mb-2 font-semibold">Applicable on:</label>
                 <div class="grid grid-cols-2 gap-2">
                     <label class="flex items-center">
                         <input type="checkbox" name="day-${siteObj.id}" value="sunday" class="mr-2" ${siteObj.days && siteObj.days.sunday ? 'checked' : ''}>
