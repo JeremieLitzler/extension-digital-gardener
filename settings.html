@@ -117,3 +117,122 @@
     <script src="google-drive-api.js"></script>
   </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Blocker Manager</title>
+    <script src="tailwind.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-4 md:p-8">
+      <h1 class="text-3xl font-bold mb-8">Website Blocker Settings</h1>
+
+      <div class="md:flex md:space-x-8">
+        <!-- Left column / Top section -->
+        <div class="lg:w-1/3 mb-8 md:mb-0">
+          <h2 class="text-2xl font-semibold mb-4">Add New Site</h2>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="flex flex-col mb-4">
+              <label>
+                Website or URL chunck to block:
+                <input
+                  type="text"
+                  id="siteInput"
+                  list="sitesList"
+                  placeholder="Enter website to block"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </label>
+              <datalist id="sitesList"></datalist>
+              <label class="mt-4">
+                From:
+                <input
+                  type="time"
+                  id="startTime"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </label>
+              <label class="mt-4">
+                To:
+                <input
+                  type="time"
+                  id="endTime"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </label>
+            </div>
+            <button
+              id="addSite"
+              class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            >
+              Add Site
+            </button>
+          </div>
+        </div>
+
+        <!-- Right column / Bottom section -->
+        <div class="lg:w-2/3">
+          <h2 class="text-2xl font-semibold mb-4">Blocked Sites</h2>
+          <ul id="blockedSitesList" class="space-y-4"></ul>
+        </div>
+      </div>
+    </div>
+    <div class="fixed top-4 right-4 flex space-x-2">
+      <h3>Local files</h3>
+      <button
+        id="exportCSV"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+      >
+        Export CSV
+      </button>
+      <button
+        id="exportJSON"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+      >
+        Export JSON
+      </button>
+      <input type="file" id="importFile" accept=".csv,.json" class="hidden" />
+      <button
+        id="importButton"
+        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+      >
+        Import
+      </button>
+    </div>
+    <div class="fixed top-12 right-4 flex space-x-2">
+      <h3>Cloud storage</h3>
+
+      <button
+        id="exportToDrive"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+      >
+        Export to Drive
+      </button>
+      <button
+        id="importFromDrive"
+        class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+      >
+        Import from Drive
+      </button>
+    </div>
+
+    <div id="driveModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 class="text-2xl">Export Successful</h2>
+        <p class="pt-4" id="driveModalMessage"></p>
+        <button
+          class="mt-4 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          id="closeModal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="google-drive-api.js"></script>
+  </body>
+</html>
