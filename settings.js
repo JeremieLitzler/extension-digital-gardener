@@ -78,7 +78,7 @@ function initializeCalendarView() {
       <select id="urlSelect" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
       </select>
     </div>
-    <div id="calendar" class="grid grid-cols-8 gap-0">
+    <div id="calendar" class="grid grid-cols-8 calendar-header-row">
       <div class="font-bold">Time</div>
       <div class="font-bold">Sun</div>
       <div class="font-bold">Mon</div>
@@ -95,27 +95,6 @@ function initializeCalendarView() {
   updateCalendarView();
 }
 
-function createCalendarStructure() {
-  const calendar = document.getElementById('calendar');
-  for (let minutes = 0; minutes < 24 * 60; minutes += 15) {
-    const hour = Math.floor(minutes / 60);
-    const minute = minutes % 60;
-    const timeCell = document.createElement('div');
-    timeCell.textContent = `${hour.toString().padStart(2, '0')}:${minute
-      .toString()
-      .padStart(2, '0')}`;
-    calendar.appendChild(timeCell);
-
-    for (let day = 0; day < 7; day++) {
-      const cell = document.createElement('div');
-      cell.classList.add('border', 'border-gray-200', 'h-4');
-      cell.dataset.minutes = minutes;
-      cell.dataset.day = day;
-      calendar.appendChild(cell);
-    }
-  }
-}
-
 function updateUrlSelect() {
   const urlSelect = document.getElementById('urlSelect');
   const uniqueUrls = [...new Set(blockedSites.map((site) => site.site))];
@@ -123,6 +102,31 @@ function updateUrlSelect() {
     .map((url) => `<option value="${url}">${url}</option>`)
     .join('');
   urlSelect.addEventListener('change', updateCalendarView);
+}
+
+const TIME_INCREMENT = 30;
+
+function createCalendarStructure() {
+  const calendar = document.getElementById('calendar');
+  for (let minutes = 0; minutes < 24 * 60; minutes += TIME_INCREMENT) {
+    const hour = Math.floor(minutes / 60);
+    const minute = minutes % 60;
+    const timeCell = document.createElement('div');
+    timeCell.classList.add('time-cell');
+    timeCell.textContent = `${hour.toString().padStart(2, '0')}:${minute
+      .toString()
+      .padStart(2, '0')}`;
+    calendar.appendChild(timeCell);
+
+    for (let day = 0; day < 7; day++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell-block');
+      cell.classList.add('border', 'border-gray-200');
+      cell.dataset.minutes = minutes;
+      cell.dataset.day = day;
+      calendar.appendChild(cell);
+    }
+  }
 }
 
 function updateCalendarView() {
@@ -147,7 +151,11 @@ function updateCalendarView() {
       'saturday',
     ];
 
-    for (let minutes = startMinutes; minutes < endMinutes; minutes += 15) {
+    for (
+      let minutes = startMinutes;
+      minutes < endMinutes;
+      minutes += TIME_INCREMENT
+    ) {
       daysOfWeek.forEach((day, index) => {
         if (site.days[day]) {
           const cell = calendar.querySelector(
@@ -231,8 +239,7 @@ document.getElementById('addSite').addEventListener('click', function () {
             .querySelectorAll('input[name="day"]')
             .forEach((checkbox) => (checkbox.checked = false));
           document.getElementById('checkAll').checked = false;
-          updateBlockedSitesList(blockedSites);
-          updateAutocompleteList();
+          refreshUI(blockedSites);
         } else {
           console.error('Invalid response from background script');
         }
@@ -377,8 +384,7 @@ function updateBlockedSitesList(sites) {
           }
           if (response && response.blockedSites) {
             blockedSites = response.blockedSites;
-            updateBlockedSitesList(blockedSites);
-            updateAutocompleteList();
+            refreshUI(blockedSites);
             delete unsavedChanges[siteObj.id];
             clearUnsavedChangesWarning(siteObj.id);
           } else {
@@ -401,8 +407,7 @@ function updateBlockedSitesList(sites) {
           }
           if (response && response.blockedSites) {
             blockedSites = response.blockedSites;
-            updateBlockedSitesList(blockedSites);
-            updateAutocompleteList();
+            refreshUI(blockedSites);
           } else {
             console.error('Invalid response from background script');
           }
@@ -563,4 +568,11 @@ async function importFromDrive() {
     console.error('Error importing from Drive:', error);
     alert('Error importing from Google Drive');
   }
+}
+
+function refreshUI(blockedSites) {
+  updateBlockedSitesList(blockedSites);
+  updateAutocompleteList();
+  updateCalendarView();
+  updateUrlSelect();
 }
