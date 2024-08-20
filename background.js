@@ -31,12 +31,12 @@ async function getDB() {
   return await dbPromise;
 }
 
-async function addBlockedSite(site, startTime, endTime) {
+async function addBlockedSite(site, startTime, endTime, days) {
   const db = await getDB();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['blockedSites'], 'readwrite');
     const objectStore = transaction.objectStore('blockedSites');
-    const request = objectStore.add({ site, startTime, endTime });
+    const request = objectStore.add({ site, startTime, endTime, days });
 
     request.onsuccess = function (event) {
       resolve(event.target.result);
@@ -65,7 +65,7 @@ async function removeBlockedSite(id) {
   });
 }
 
-async function updateBlockedSite(id, startTime, endTime) {
+async function updateBlockedSite(id, startTime, endTime, days) {
   const db = await getDB();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['blockedSites'], 'readwrite');
@@ -76,6 +76,7 @@ async function updateBlockedSite(id, startTime, endTime) {
       const data = event.target.result;
       data.startTime = startTime;
       data.endTime = endTime;
+      data.days = days;
       const updateRequest = objectStore.put(data);
 
       updateRequest.onsuccess = function () {
@@ -133,7 +134,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === 'addSite') {
-    addBlockedSite(request.site, request.startTime, request.endTime)
+    addBlockedSite(request.site, request.startTime, request.endTime, request.days)
       .then(() => getAllBlockedSites())
       .then((sites) => sendResponse({ blockedSites: sites }))
       .catch((error) => sendResponse({ error: error.toString() }));
@@ -145,7 +146,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       .catch((error) => sendResponse({ error: error.toString() }));
     return true;
   } else if (request.action === 'updateSite') {
-    updateBlockedSite(request.id, request.startTime, request.endTime)
+    updateBlockedSite(request.id, request.startTime, request.endTime, request.days)
       .then(() => getAllBlockedSites())
       .then((sites) => sendResponse({ blockedSites: sites }))
       .catch((error) => sendResponse({ error: error.toString() }));
