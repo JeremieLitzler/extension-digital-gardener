@@ -52,9 +52,26 @@ document.addEventListener('DOMContentLoaded', function () {
       blockedSites = response.blockedSites;
       updateBlockedSitesList(blockedSites);
       updateAutocompleteList();
+      initializeCalendarView();
     }
   });
+
+  // View switching
+  document.getElementById('listViewBtn').addEventListener('click', function() {
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('calendarView').classList.add('hidden');
+  });
+
+  document.getElementById('calendarViewBtn').addEventListener('click', function() {
+    document.getElementById('listView').classList.add('hidden');
+    document.getElementById('calendarView').classList.remove('hidden');
+  });
 });
+
+function initializeCalendarView() {
+  // This function will be implemented to set up the calendar view
+  console.log('Calendar view initialized');
+}
 
 function updateAutocompleteList() {
   const sitesList = document.getElementById('sitesList');

@@ -183,7 +183,16 @@
         <!-- Blocked Sites list section -->
         <div class="w-full lg:w-2/3 order-1 lg:order-2">
           <h2 class="text-2xl font-semibold mb-4">Blocked Sites</h2>
-          <ul id="blockedSitesList" class="space-y-4"></ul>
+          <div class="flex space-x-4 mb-4">
+            <button id="listViewBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">List View</button>
+            <button id="calendarViewBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Calendar View</button>
+          </div>
+          <div id="listView">
+            <ul id="blockedSitesList" class="space-y-4"></ul>
+          </div>
+          <div id="calendarView" class="hidden">
+            <!-- Calendar view content will be added here -->
+          </div>
         </div>
       </div>
     </main>
