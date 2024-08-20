@@ -81,18 +81,23 @@
   <body>
     <div class="container">
       <div class="block-icon">🚫</div>
-      <h1 class="text-3xl">Access Blocked</h1>
-      <div id="quoteContainer" class="mt-4 mb-8">
-        <p id="quoteText" class="text-2xl"></p>
+      <h1 id="heading" class="text-6xl">Access Blocked</h1>
+      <div id="quoteContainer" class="m-16">
+        <p id="quoteText" class="text-2xl mb-2"></p>
         <p id="quoteAuthor" class="text-xl"></p>
       </div>
       <p>This website has been blocked by the Website Blocker extension.</p>
       <p>Blocked URL: <span id="blockedUrl"></span></p>
       <p>
         If you believe this is a mistake or want to unblock this site, please
-        adjust your settings in the extension popup.
+        adjust your settings in the extension settings.
       </p>
-      <button id="settingsButton" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mt-8">Go to Settings</button>
+      <button
+        id="settingsButton"
+        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 mt-8"
+      >
+        Adjust the settings
+      </button>
     </div>
     <div class="image-credit">
       Photo provided by

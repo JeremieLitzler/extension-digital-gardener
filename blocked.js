@@ -36,28 +36,51 @@ function setupSettingsButton() {
   });
 }
 
-function loadRandomQuote() {
-  fetch('quotes.json')
+function loadRandomValue(values, callback) {
+  const randomIndex = Math.floor(Math.random() * values.length);
+  const randomValue = values[randomIndex];
+  callback(randomValue);
+}
+
+async function loadRandomQuote() {
+  const quotes = await fetch('static/json/quotes.json')
     .then((response) => response.json())
     .then((data) => {
-      const quotes = data.quotes;
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      const randomQuote = quotes[randomIndex];
-
-      const quoteTextElement = document.getElementById('quoteText');
-      const quoteAuthorElement = document.getElementById('quoteAuthor');
-
-      quoteTextElement.textContent = `"${randomQuote.text}"`;
-      quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+      return data.quotes;
     })
     .catch((error) => {
       console.error('Error loading quotes:', error);
     });
+
+  loadRandomValue(quotes, (randomQuote) => {
+    const quoteTextElement = document.getElementById('quoteText');
+    const quoteAuthorElement = document.getElementById('quoteAuthor');
+
+    quoteTextElement.textContent = `"${randomQuote.text}"`;
+    quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+  });
+}
+
+async function loadRandomHeading() {
+  const sentences = await fetch('static/json/cta-sentences.json')
+    .then((response) => response.json())
+    .then((data) => {
+      return data.sentences;
+    })
+    .catch((error) => {
+      console.error('Error loading CTA sentences:', error);
+    });
+
+  loadRandomValue(sentences, (randomHeading) => {
+    const headingElement = document.getElementById('heading');
+    headingElement.textContent = `${randomHeading}`;
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   setRandomBackground();
   displayBlockedUrl();
   setupSettingsButton();
+  loadRandomHeading();
   loadRandomQuote();
 });
