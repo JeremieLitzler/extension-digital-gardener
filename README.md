@@ -58,7 +58,7 @@ You can :
 - [ ] Warn user about overlapping time ranges for same website (https://github.com/JeremieLitzler/website-blocker-extension/issues/4)
 - [ ] Add a Pomodoro timer to the extension (https://github.com/JeremieLitzler/website-blocker-extension/issues/6)
 - [ ] Allow blocked websites during pomodoro short breaks (https://github.com/JeremieLitzler/website-blocker-extension/issues/7)
-- [ ] Add the ability to send desktop push notifications when a website becomes unblocked (https://github.com/JeremieLitzler/website-blocker-extension/issues/14)
+- [ ] Add the ability to send desktop push notifications when a website becomes unblocked (https://github.com/JeremieLitzler/website-blocker-extension/issues/13)
 - [ ] Publish the extension to the Chrome Webstore (https://github.com/JeremieLitzler/website-blocker-extension/issues/12)
 - [ ] Publish the OAuth application (https://github.com/JeremieLitzler/website-blocker-extension/issues/11)
 - [ ] Convert to TypeScript (https://github.com/JeremieLitzler/website-blocker-extension/issues/8)
