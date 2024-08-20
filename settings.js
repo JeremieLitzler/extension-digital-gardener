@@ -95,15 +95,17 @@ function initializeCalendarView() {
 
 function createCalendarStructure() {
   const calendar = document.getElementById('calendar');
-  for (let hour = 0; hour < 24; hour++) {
+  for (let minutes = 0; minutes < 24 * 60; minutes += 15) {
+    const hour = Math.floor(minutes / 60);
+    const minute = minutes % 60;
     const timeCell = document.createElement('div');
-    timeCell.textContent = `${hour.toString().padStart(2, '0')}:00`;
+    timeCell.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     calendar.appendChild(timeCell);
 
     for (let day = 0; day < 7; day++) {
       const cell = document.createElement('div');
-      cell.classList.add('border', 'border-gray-200', 'h-6');
-      cell.dataset.hour = hour;
+      cell.classList.add('border', 'border-gray-200', 'h-4');
+      cell.dataset.minutes = minutes;
       cell.dataset.day = day;
       calendar.appendChild(cell);
     }
@@ -120,21 +122,21 @@ function updateUrlSelect() {
 function updateCalendarView() {
   const selectedUrl = document.getElementById('urlSelect').value;
   const calendar = document.getElementById('calendar');
-  const cells = calendar.querySelectorAll('div[data-hour]');
+  const cells = calendar.querySelectorAll('div[data-minutes]');
 
   cells.forEach(cell => cell.classList.remove('bg-red-500'));
 
   const sitesForUrl = blockedSites.filter(site => site.site === selectedUrl);
 
   sitesForUrl.forEach(site => {
-    const startHour = parseInt(site.startTime.split(':')[0]);
-    const endHour = parseInt(site.endTime.split(':')[0]);
+    const startMinutes = timeToMinutes(site.startTime);
+    const endMinutes = timeToMinutes(site.endTime);
     const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
-    for (let hour = startHour; hour < endHour; hour++) {
+    for (let minutes = startMinutes; minutes < endMinutes; minutes += 15) {
       daysOfWeek.forEach((day, index) => {
         if (site.days[day]) {
-          const cell = calendar.querySelector(`div[data-hour="${hour}"][data-day="${index}"]`);
+          const cell = calendar.querySelector(`div[data-minutes="${minutes}"][data-day="${index}"]`);
           if (cell) {
             cell.classList.add('bg-red-500');
           }
@@ -142,6 +144,11 @@ function updateCalendarView() {
       });
     }
   });
+}
+
+function timeToMinutes(time) {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
 }
 
 function updateAutocompleteList() {
