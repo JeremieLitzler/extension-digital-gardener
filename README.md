@@ -1,4 +1,4 @@
-# A very simple but flexible block-site extension for Chrome
+# A very simple but flexible extension for Chrome to weed out distractions on the web
 
 **🚨🚨🚨 The extension is still in beta mode as long as the v1 isn't released. 🚨🚨🚨**
 
@@ -10,7 +10,7 @@ It works great but I couldn't setup time range when I wanted some websites to be
 
 It allowed time ranges applying to all blocked websites.
 
-## How to use Website Blocker ⁉️
+## How to use Digital Gardener ⁉️
 
 1. Download the source code and unzip it in your preferred location.
 2. Browse to [chrome://extensions/](chrome://extensions/).
@@ -30,7 +30,7 @@ A blocking entry is defined with:
 
 You can have several entries with the same URL chunk but different time ranges.
 
-You cannot disable the website blocker in the settings while keeping the extension enabled because I feel that it will allow you to cheat. You can still update the time range you're blocking the
+You cannot disable the Digital Gardener in the settings while keeping the extension enabled because I feel that it will allow you to cheat. You can still update the time range you're blocking the
 
 You can :
 
@@ -63,6 +63,7 @@ You can :
 - [ ] Publish the OAuth application (https://github.com/JeremieLitzler/website-blocker-extension/issues/11)
 - [ ] Convert to TypeScript (https://github.com/JeremieLitzler/website-blocker-extension/issues/8)
 - [ ] Add tests (https://github.com/JeremieLitzler/website-blocker-extension/issues/9)
+- [ ] When browsing YouTube, replace suggestions that you know are distractions from a list of keywords.
 
 ## Troubleshooting 🐞
 
